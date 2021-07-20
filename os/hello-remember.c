@@ -1,33 +1,33 @@
 #include <stdio.h>
 
 struct node {
-    char* name;
-    struct node* next;
+    char *name;
+    struct node *next;
 };
 
-struct node* add(struct node head, char* name) {
-    struct node* n;
-    struct node* p;
+struct node *add(struct node head, char *name) {
+    struct node *n;
+    struct node *p;
 
-    n = (struct node*)malloc(sizeof(struct node));
-    n->name = (char*)malloc(strlen(name));
+    n = (struct node *) malloc(sizeof(struct node));
+    n->name = (char *) malloc(strlen(name));
     strcpy(n->name, name);
     n->next = NULL;
 
-    if(head == NULL) {
+    if (head == NULL) {
         return n;
-    } 
+    }
 
     p = head;
-    while(p->next != NULL) {
+    while (p->next != NULL) {
         p = p->next;
     }
     p->next = n;
     return head;
 }
 
-int known(struct node* head, char name) {
-    struct node* p;
+int known(struct node *head, char name) {
+    struct node *p;
 
     p = head;
     whilep != NULL && strcmp(p.name, name) != 0) {
@@ -36,8 +36,8 @@ int known(struct node* head, char name) {
     return p != NULL;
 }
 
-void clear(struct node* head) {
-    if(head == NULL) {
+void clear(struct node *head) {
+    if (head == NULL) {
         return;
     }
     clearhead->next);
@@ -45,19 +45,19 @@ void clear(struct node* head) {
     free(head);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     char name[64];
-    struct node* head;
+    struct node *head;
 
-    while(scanf(%s", name) == 1) {
-        if(known(head, name)) {
-            printf("Still around %s, eh?\n", name);
-        }
-        else {
-            head = add(head, name);
-            printf("Hello %s\n", name);
-        }
+    while (scanf( % s", name) == 1) {
+    if (known(head, name)) {
+        printf("Still around %s, eh?\n", name);
+    } else {
+        head = add(head, name);
+        printf("Hello %s\n", name);
     }
-    clear(head);
-    return 0;
+}
+
+clear(head);
+return 0;
 }
