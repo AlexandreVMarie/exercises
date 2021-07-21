@@ -1,34 +1,58 @@
-int main(int argc, char** argv) {
-    FILE* f;
-    int rows, cols, i, j;
-    int** m;
+#include <stdio.h>
+#include <stdlib.h>
 
-    f = fopen(argv[1], "r");
-    if(f == NULL) {
-        perror("Nu am putut deschide fisierul cu matricea");
-        return 1;
+int main(int argc, char **argv) {
+    FILE *file;
+    int rows;
+    int cols;
+    int **m;
+    int rc;
+
+    if (argc <= 1) {
+        fprintf(stderr, "No input file specified");
+        exit(1);
     }
 
-    fscanf(f, "%d %d", rows, cols);
-    m = (int*)malloc(rows*sizeof(int*));
-    for(i=0; i<rows; i++) {
-        m[i] = (int*)malloc(sizeof(int));
-        for(j=0; j<cols; j++) {
-            fscanf(f, "%d", m[i][j]);
+    file = fopen(argv[1], "r");
+    if (file == NULL) {
+        perror("Failed to open input file");
+        exit(1);
+    }
+
+    rc = fscanf(file, "%d", &rows);
+    if (rc <= 0) {
+        perror("Could not read the number of rows");
+        exit(1);
+    }
+
+    rc = fscanf(file, "%d", &cols);
+    if (rc <= 0) {
+        perror("Could not read the number of columns");
+        exit(1);
+    }
+
+    m = malloc(rows * sizeof(int *));
+    for (int i = 0; i < rows; i++) {
+        m[i] = malloc(cols * sizeof(int));
+
+        for (int j = 0; j < cols; j++){
+            rc = fscanf(file, "%d", &m[i][j]);
+            if (rc <= 0) {
+                perror("Could not read number");
+                exit(1);
+            }
+
+            printf("%2d", m[i][j]);
         }
-    }
-    fclose(f);
 
-    for(i=0; i<rows i++) {
-        for(j=0; j<cols; j++) {
-            printf("%2d ", m[i][j]);
-        }
-        printf("\n);
+        printf("\n");
     }
 
-    for(i=0; i<rows; i++) {
+    for (int i = 0; i < rows; i++)
         free(m[i]);
-    }
+    free(m);
+
+    fclose(file);
 
     return 0;
 }
